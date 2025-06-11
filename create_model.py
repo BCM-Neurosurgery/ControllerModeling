@@ -202,10 +202,10 @@ def run_model_pipeline(data_dir, output_path, model, sh_type):
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Create a model for a patient pacman dataset.")
-    parser.add_argument("input", "-i", type=str, required=True, help="Path to the patient file.")
-    parser.add_argument("output-dir", "-o", type=str, required=True, help="Directory to save the output model.")
-    parser.add_argument("ctype", "-c", type=str, required=True, help="Type of controller to use for the model.")
-    parser.add_argument("shift-type", "-s", type=int, default=6, help="Shift type for the model (default: 6).")
+    parser.add_argument("--input", "-i", type=str, required=True, help="Path to the patient file.")
+    parser.add_argument("--output-dir", "-o", type=str, required=True, help="Directory to save the output model.")
+    parser.add_argument("--ctype", "-c", type=str, required=True, help="Type of controller to use for the model.")
+    parser.add_argument("--shift-type", "-s", type=int, default=6, help="Shift type for the model (default: 6).")
     args = parser.parse_args()
 
     # get model type from command line arg
