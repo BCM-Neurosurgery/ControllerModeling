@@ -268,8 +268,8 @@ def retrievepositions(datafile, dattype='nhp', rescale = 0.001):
 
             if d['numNPCs'][0][0][0] == 1:
                 p1 = pd.DataFrame(d['prey_pos'][0][0][0]).rename(columns={0: 'prey1Xpos', 1: 'prey1Ypos'})
-                p2 = pd.DataFrame(np.zeros((len(p1), 2)) * np.NAN).rename(columns={0: 'prey2Xpos', 1: 'prey2Ypos'})
-                p3 = pd.DataFrame(np.zeros((len(p1), 2)) * np.NAN).rename(columns={0: 'predXpos', 1: 'predYpos'})
+                p2 = pd.DataFrame(np.zeros((len(p1), 2)) * np.nan).rename(columns={0: 'prey2Xpos', 1: 'prey2Ypos'})
+                p3 = pd.DataFrame(np.zeros((len(p1), 2)) * np.nan).rename(columns={0: 'predXpos', 1: 'predYpos'})
 
                 if rescale is not None:
                     for iter, col in enumerate(p1.columns):
@@ -281,7 +281,7 @@ def retrievepositions(datafile, dattype='nhp', rescale = 0.001):
             elif d['numNPCs'][0][0][0] == 2 and d['numPrey'][0][0][0] == 2: # 2 prey scenario
                 p1 = pd.DataFrame(d['prey_pos'][0][0][0]).rename(columns={0: 'prey1Xpos', 1: 'prey1Ypos'})
                 p2 = pd.DataFrame(d['prey_pos'][0][0][1]).rename(columns={0: 'prey2Xpos', 1: 'prey2Ypos'})
-                p3 = pd.DataFrame(np.zeros((len(p1),2))*np.NAN).rename(columns={0: 'predXpos', 1: 'predYpos'})
+                p3 = pd.DataFrame(np.zeros((len(p1),2))*np.nan).rename(columns={0: 'predXpos', 1: 'predYpos'})
 
                 if rescale is not None:
                     for iter, col in enumerate(p1.columns):
@@ -294,7 +294,7 @@ def retrievepositions(datafile, dattype='nhp', rescale = 0.001):
                 pos = pd.concat([selfpos,p1, p2, p3], axis=1)
             elif d['numNPCs'][0][0][0] == 2 and d['numPrey'][0][0][0] == 1: #1 prey 1 pred scenario
                 p1 = pd.DataFrame(d['prey_pos'][0][0][0]).rename(columns={0: 'prey1Xpos', 1: 'prey1Ypos'})
-                p2 = pd.DataFrame(np.zeros((len(p1), 2)) * np.NAN).rename(columns={0: 'prey2Xpos', 1: 'prey2Ypos'})
+                p2 = pd.DataFrame(np.zeros((len(p1), 2)) * np.nan).rename(columns={0: 'prey2Xpos', 1: 'prey2Ypos'})
                 p3 = pd.DataFrame(d['pred_pos'][0][0][0]).rename(columns={0: 'predXpos', 1: 'predYpos'})
 
                 if rescale is not None:
@@ -349,8 +349,8 @@ def retrievepositions(datafile, dattype='nhp', rescale = 0.001):
                 p1 = pd.DataFrame()
                 p1 = p1.assign(prey1Xpos=datafile.iloc[trial]['NPC_xPath'][0].flatten(),prey1Ypos=datafile.iloc[trial]['NPC_yPath'][0].flatten())
 
-                p2 = pd.DataFrame(np.zeros((len(p1), 2)) * np.NAN).rename(columns={0: 'prey2Xpos', 1: 'prey2Ypos'})
-                p3 = pd.DataFrame(np.zeros((len(p1), 2)) * np.NAN).rename(columns={0: 'predXpos', 1: 'predYpos'})
+                p2 = pd.DataFrame(np.zeros((len(p1), 2)) * np.nan).rename(columns={0: 'prey2Xpos', 1: 'prey2Ypos'})
+                p3 = pd.DataFrame(np.zeros((len(p1), 2)) * np.nan).rename(columns={0: 'predXpos', 1: 'predYpos'})
 
                 if rescale is not None:
                     for iter, col in enumerate(p1.columns):
@@ -364,7 +364,7 @@ def retrievepositions(datafile, dattype='nhp', rescale = 0.001):
                 p2 = pd.DataFrame()
                 p2 = p2.assign(prey2Xpos=datafile.iloc[trial]['NPC_xPath'][1].flatten(),
                                prey2Ypos=datafile.iloc[trial]['NPC_yPath'][1].flatten())
-                p3 = pd.DataFrame(np.zeros((len(p1), 2)) * np.NAN).rename(columns={0: 'predXpos', 1: 'predYpos'})
+                p3 = pd.DataFrame(np.zeros((len(p1), 2)) * np.nan).rename(columns={0: 'predXpos', 1: 'predYpos'})
 
                 if rescale is not None:
                     for iter, col in enumerate(p1.columns):
@@ -378,7 +378,7 @@ def retrievepositions(datafile, dattype='nhp', rescale = 0.001):
                 p1 = pd.DataFrame()
                 p1 = p1.assign(prey1Xpos=datafile.iloc[trial]['NPC_xPath'][0].flatten(),
                                prey1Ypos=datafile.iloc[trial]['NPC_yPath'][0].flatten())
-                p2 = pd.DataFrame(np.zeros((len(p1), 2)) * np.NAN).rename(columns={0: 'prey2Xpos', 1: 'prey2Ypos'})
+                p2 = pd.DataFrame(np.zeros((len(p1), 2)) * np.nan).rename(columns={0: 'prey2Xpos', 1: 'prey2Ypos'})
                 p3 = pd.DataFrame()
                 p3 = p3.assign(predXpos=datafile.iloc[trial]['NPC_xPath'][1].flatten(),
                                predYpos=datafile.iloc[trial]['NPC_yPath'][1].flatten())
@@ -409,13 +409,13 @@ def retrievepositions(datafile, dattype='nhp', rescale = 0.001):
                     (x, y, xp[:, 0].flatten(), yp[:, 0].flatten())).transpose()
                 tmp = tmp*rescale
                 positions.append(pos.assign(selfXpos=tmp[:,0],selfYpos=tmp[:,1],prey1Xpos=tmp[:,2],prey1Ypos=tmp[:,3],
-                           prey2Xpos=np.NAN,prey2Ypos=np.NAN,predXpos=np.NAN,predYpos=np.NAN))
+                           prey2Xpos=np.nan,prey2Ypos=np.nan,predXpos=np.nan,predYpos=np.nan))
 
             elif xp.shape[1] == 2:
                 tmp = np.vstack((x, y, xp[:, 0].flatten(), yp[:, 0].flatten(), xp[:, 1].flatten(),yp[:, 1].flatten())).transpose()
                 tmp = tmp*rescale
                 positions.append(pos.assign(selfXpos=tmp[:, 0], selfYpos=tmp[:, 1], prey1Xpos=tmp[:, 2], prey1Ypos=tmp[:, 3],
-                               prey2Xpos=tmp[:,4], prey2Ypos=tmp[:,5], predXpos=np.NAN, predYpos=np.NAN))
+                               prey2Xpos=tmp[:,4], prey2Ypos=tmp[:,5], predXpos=np.nan, predYpos=np.nan))
 
     return positions
 

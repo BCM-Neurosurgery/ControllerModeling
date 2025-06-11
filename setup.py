@@ -12,7 +12,7 @@ setup(
     install_requires=[
         "pandas",
         "matplotlib",
-        "numpy==1.23.5",
+        "numpy",
         "jax[cpu]",
         "numpyro",
         "mat73",

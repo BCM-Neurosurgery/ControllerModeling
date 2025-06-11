@@ -4,6 +4,8 @@ import pandas as pd
 import jax
 import jax.numpy as jnp
 from jax import grad, jacfwd, jacrev
+from scipy.io import loadmat
+import os
 from controllers.data import DataHandling as dh
 from controllers.data import DataProcessing as dp
 
@@ -323,3 +325,50 @@ def generate_smoothing_penalty(num_rbfs):
     S_x = D_x.T @ D_x
     S_x = jnp.array(S_x)
     return S_x
+
+def format_neuron_data(data_dir):
+    # get patient
+    patient = os.path.basename(data_dir)
+    folder = os.path.dirname(data_dir)
+    # load data
+    sessvars, neural=dh.dataloader_EMU(folder=folder,subj=patient)
+    dataall=neural['neuronData']
+
+    # get kinematics data
+    positions=dh.retrievepositions(dataall,dattype='hemu')
+    kinematics=dp.computederivatives(positions, vartodiff=['selfXpos','selfYpos','prey1Xpos','prey1Ypos','prey2Xpos','prey2Ypos'], dt=1.0/60.0,smooth=True)
+
+    #subselect 2 prey trials
+    ogsessvars=sessvars
+    kinematics,sessvars =dh.subselect(kinematics,sessvars,trialtype='2')
+
+    # Rt compute and cut data
+    sessvars = dp.get_reaction_time(sessvars, kinematics)
+    kinematics = dh.cut_to_rt(kinematics, sessvars)
+    kinematics = dh.get_time_vector(kinematics)
+    kinematics = dp.compute_distance(kinematics,trialtype=2)
+    #compute relative normalized speed
+    kinematics = dp.compute_relspeed(kinematics,trialtype=2)
+    kinematics = dp.compute_selfspeed(kinematics)
+
+
+    #For each kinematics frame, add relative reward value
+    Xdsgn = kinematics
+    for trial in range(len(Xdsgn)):
+        Xdsgn[trial]['val1'] = np.repeat(sessvars.iloc[trial].NPCvalA,len(kinematics[trial]))
+        Xdsgn[trial]['val2'] = np.repeat(sessvars.iloc[trial].NPCvalB,len(kinematics[trial]))
+        
+    # Switch reward positions so highest value is always in prey 1 slot
+    Xdsgn = dh.rewardalign(Xdsgn)
+    Xdsgn = [df[sorted(df.columns)] for df in Xdsgn]
+
+    # Compute relative value
+    Xdsgn = [df.assign(relvalue=df['val1'] - df['val2']).round(2) for df in Xdsgn]
+
+    speed=[]
+    for trial in range(len(Xdsgn)):
+        speed.append(np.array(Xdsgn[trial]['selfspeedmag']))
+    
+    return Xdsgn
+
+        
