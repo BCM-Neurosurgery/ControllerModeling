@@ -170,7 +170,7 @@ def run_model_pipeline(data_dir, output_path, model, sh_type):
     cfgparams=ut.generate_sim_defaults()
     cfgparams['rbfs']=30 
     cfgparams['lambda_reg']=3
-    #just use one trial
+    # just use one trial
     cfgparams['trials']=1
     # gpscaler
     gpscaler = 3
